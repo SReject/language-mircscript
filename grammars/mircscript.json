@@ -1,0 +1,124 @@
+{
+    "scopeName": "source.mircscript",
+    "name": "mIRCScript",
+    "fileTypes": [
+        "mirc",
+        "msl",
+        "mrc"
+    ],
+    "repository": {
+        "root_comment_line":{
+            "match": "^\\x20*(;.*)$(?:\\x20|\\r?\\n)*",
+            "captures":{
+                "1": { "name": "comment.line.semicolon.mircscript" }
+            }
+        },
+        "root_comment_block":{
+            "name": "comment.block.mircscript",
+            "begin": "^\\x20*\\/\\*",
+            "end": "^\\x20*\\*\\/.*"
+        },
+        "root_alias": {
+            "name": "storage.type.alias.mircscript",
+            "begin": "^\\x20*(?i)(alias)(?-i)(?:\\x20*(?i)(-l)(?-i))?(?:\\x20*([^\\x20\\{\\r\\n]+))?\\x20*",
+            "beginCaptures":{
+                "1": { "name": "keyword.control.alias.mircscript" },
+                "2": { "name": "keyword.operator.switch.mircscript" },
+                "3": { "name": "entity.name.function.mircscript" }
+            },
+            "patterns":[
+                { "include" : "#statement_block" },
+                { "include" : "#statement_line" }
+            ],
+            "end": "$"
+        },
+        "root_eventon":{
+        },
+        "root_eventraw":{
+        },
+        "root_ctcpevent":{
+        },
+        "root_invalid_line": {
+            "match": "^\\x20*(?!on|alias|on|raw|ctcp|;|#|\\x20|\\/\\*).*$",
+            "name": "invalid.illegal.mircscript"
+        },
+        "root_invalid_trailing_text":{
+            "match": "\\G\\x20*[^\\x20\\r\\n].*$",
+            "name": "invalid.illegal.mircscript"
+        },
+
+        "statement":{
+            "patterns":[
+                { "include" : "#statement_block" },
+                { "include" : "#statement_line" }
+            ]
+        },
+        "statement_block":{
+            "name": "meta.storage.type.statementblock.mircscript",
+            "begin": "\\G(?<=:| )(\\{)(?:\\x20+|\\x20*\\r\\n)",
+            "beginCaptures": {
+                "1": { "name" : "punctuation.curly.bracket.mircscript" }
+            },
+            "end": "(?:^|\\x20)(\\})(?:\\x20|$)",
+            "endCaptures":{
+                "1": { "name" : "punctuation.curly.bracket.mircscript" }
+            },
+            "patterns":[
+                { "include": "#statement_line" }
+            ]
+        },
+
+        "statement_line": {
+            "being": "\\G\\x20*",
+            "end": "$|(?:(?<=\\x20)(?:(\\|)|(\\}))(?:$|\\x20+))",
+            "endCaptures":{
+                "1": { "name": "punctuation.terminator.pipe.mircscript" },
+                "2": { "name": "punctuation.curly.brackets.mircscript" }
+            },
+            "patterns":[
+                { "include": "#statement_empty" },
+                { "include": "#statement_squarebrackets" },
+                { "include": "#statement_var" },
+                { "include": "#statement_identifier" },
+                { "include": "#statement_command" }
+            ]
+        },
+
+        "statement_empty": {
+            "match": "\\G\\x20*(?=$|(?:(?<=\\x20)(?:(\\|)|(\\}))(?:$|\\x20+)))"
+        }
+    },
+    "patterns":[
+        { "include": "#root_comment_line" },
+        { "include": "#root_comment_block" },
+        {
+            "name": "storage.type.group.mircscript",
+            "begin": "^\\x20*(#[^\\x20\\r\\n]+)\\x20+(?i)(on|off)(?-i)\\x20*$",
+            "beginCaptures":{
+                "1": { "name": "storage.type.groupname.mircscript" },
+                "2": { "name": "storage.modifier.groupstate.mircscript" }
+            },
+            "end": "^\\x20*(?i)(\\1)\\x20+(end)(?-i)\\x20*$",
+            "endCaptures":{
+                "1": { "name": "storage.type.groupname.mircscript" },
+                "2": { "name": "storage.modifier.groupstate.mircscript" }
+            },
+            "patterns":[
+                { "include": "#root_comment_line" },
+                { "include": "#root_comment_block" },
+                { "include": "#root_alias" },
+                { "include": "#root_eventon" },
+                { "include": "#root_eventraw" },
+                { "include": "#root_eventctcp" },
+                { "include": "#root_invalid_line" },
+                { "include": "#root_invalid_trailing_text" }
+            ]
+        },
+        { "include": "#root_alias" },
+        { "include": "#root_eventon" },
+        { "include": "#root_eventraw" },
+        { "include": "#root_eventctcp" },
+        { "include": "#root_invalid_line" },
+        { "include": "#root_invalid_trailing_text" }
+    ]
+}

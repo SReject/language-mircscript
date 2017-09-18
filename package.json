@@ -1,0 +1,15 @@
+{
+  "name": "language-mircscript",
+  "version": "0.0.0",
+  "description": "mIRC Scripting grammar for Atom",
+  "license": "MIT",
+  "homepage": "http://sreject.github.io/language-mircscript",
+  "repository": "https://github.com/sreject/language-mircscript",
+  "bugs": {
+    "url": "https://github.com/sreject/language-mircscript/issues"
+  },
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  }
+}
