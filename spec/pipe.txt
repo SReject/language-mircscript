@@ -1,0 +1,23 @@
+Valid:
+    command | command
+
+Suffixed with text
+Treated as plain text
+    <text>|
+
+Prefixed with text
+Treated as plain text
+    |<text>
+
+Within text
+Treated as plain text
+    <text>|<text>
+
+
+At beginning of line
+Treated as a command
+    | <text>
+
+At end of line
+Treated as plain text
+    <text> |

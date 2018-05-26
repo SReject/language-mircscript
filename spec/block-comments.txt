@@ -1,0 +1,36 @@
+Valid:
+    /* comment
+    */
+
+Multi-line with trailing text
+Unorthodoxed; 'text' is considered part of comment
+    /* comment
+    */ text
+
+Multi-line with trailing text after pipe
+Unorthodoxed; '| text' is considered part of comment
+    /* comment
+    */ | text
+
+Proceeded by a pipe
+Unorthodoxed: Starts the block comment but terminates at EOL
+    command | /* comment
+
+Single line
+Invalid: Doesn't terminate the comment
+    /* comment */
+
+Leading text with whitespace
+Invalid: Doesn't terminate the comment
+    /* comment
+    text */
+
+Leading text without whitespace
+Invalid: Doesn't terminate the comment
+    /* comment
+    text*/
+
+Proceeded by command
+Invalid: Not recognized as a comment
+    command /* comment
+    */

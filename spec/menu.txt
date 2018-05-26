@@ -1,0 +1,72 @@
+Notes:
+      +: repetition
+     []: optional
+     <>: non-literal
+      |: OR
+      &: AND
+    (N): indicates a reference to a note
+
+    Spaces(\x20|chr 32) between tokens are required
+
+Menu Definition
+    Valid
+        menu
+        menu <targetlist>
+        menu <targetlist> { }
+        menu <targetlist> {
+          <items> }
+        menu <targetlist> {
+          <items>
+        }
+        menu <targetlist> {
+          <items>
+        } <text>(1)
+
+        (1) Text will be processed as part of the menu body
+
+
+    Invalid
+        menu{
+        menu {}
+        menu <targetlist>{
+        menu <targetlist> {}
+        menu <targetlist> {<non-space & non-EOL>(1)
+        menu <targetlist> { <text>(2)
+        menu <targetlist> {
+            <items>
+        <non-space & non-EOL>}(1)
+        menu <targetlist> {
+          <items>
+        }<non-space & non-EOL>(1)
+
+        (1) Will also cause mIRC to miss-match brackets
+        (2) Any trailing text after the opening bracket causes the entire menu definition to be invalid
+
+
+Menu Items
+
+    Valid:
+        [.+]<name>(1)
+        [.+]<name>:<body>
+        [.+]<name>:{
+            <body> }
+        [.+]<name>:{
+            <body>
+        }
+
+    Unexpected bahaviors
+        [.+]<name>:(2)
+        [.+]:[<body>](2)
+
+    Invalid
+        [.+]<name>:{<non-space & non-EOL>(3)
+        [.+]<name>:{
+            body
+        <non-space & non-EOL>}(3)
+        [.+]<name>:{
+            body
+        }<non-space & non-EOL>(3)
+
+    (1) mIRC will disable the option when the menu is opened
+    (2) mIRC will skip the item when preparing the menu
+    (3) Will cause mIRC to miss-match brackets
